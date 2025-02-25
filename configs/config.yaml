@@ -1,0 +1,103 @@
+# Seed for reproducibility: Number (int) or null
+seed: &seed 149
+
+# If null (= None), use the original node features, otherwise use positional encodings with the given dimensionality
+# as node features (required for 'SBM' dataset)
+node_feature_dim: 64
+
+# Data parameters
+data:
+  # Path to the folder that contains the data
+  path: './data/'
+  # Name of the dataset
+  dataset: 'SBM'
+
+# Diffusion Model parameters
+diffusion_model:
+  # Hidden channels for every level of the U-Net
+  hidden_channels: [64, 128]
+  # Dimensionality of the node embeddings
+  node_embedding_dim: 64
+  # Dimensionality of the time step embeddings
+  time_embedding_dim: 64
+  # Number of residual blocks in a row inside ContractingBlock and ExpansiveBlock
+  num_res_blocks: 1
+  # Kernel size of the 1D convolution
+  kernel_size: 3
+
+# GNN parameters
+gnn:
+  # Hidden channels
+  hidden_channels: 100
+  # Output channels
+  out_channels: 10
+
+
+# Training parameters for the Diffusion Model
+dm_training:
+  # Seed for reproducibility
+  seed: *seed
+  # Device
+  device: 'cuda'
+  # Number of epochs
+  num_epochs: 10000
+  # Batch size
+  batch_size: 100
+  # Number of loss values for the history of the time step sampler
+  num_history_values: 10
+  # Time step sampling mode
+  time_step_sampling: 'uniform'
+  # Optimizer
+  optimizer:
+    # Optimizer parameters
+    kwargs:
+      # Learning rate
+      lr: 0.001
+      # Weight decay
+      weight_decay: 0.0005
+  # Random walks
+  random_walks:
+    # Walk length (in terms of nodes) of the random walks (results in walk_length - 1 edges)
+    walk_length: &walk_length 8
+    # Control of revisiting a node
+    p: 1.0
+    # Control between breadth-first search and depth-first search.
+    q: 1.0
+  # Number of diffusion time steps
+  num_diffusion_steps: *walk_length
+
+# Training parameters for the GNN
+gnn_training:
+  # Seed for reproducibility
+  seed: *seed
+  # Device
+  device: 'cuda'
+  # Number of graphs to use for training and validation
+  num_graphs: 1000
+  # Batch size
+  batch_size: 10
+  # Probability of edge dropout to remove edges from the original graph
+  edge_dropout: 0.3
+  # Lower and upper percentage of fake edges in a perturbed graph w.r.t. the valid edges
+  fake_edge_ratios: [0.2, 0.4]
+  # Number of training epochs
+  num_epochs: 1000
+  # Patience for early stopping
+  patience: 20
+  # Optimizer
+  optimizer:
+    # Optimizer parameters
+    kwargs:
+      # Learning rate
+      lr: 0.001
+      # Weight decay
+      weight_decay: 0.0005
+
+# Graph generation parameters
+graph_generation:
+  # Device
+  device: 'cuda'
+  # Number of graphs to sample for the evaluation
+  num_samples: 10
+  # Number of steps in which to generate a graph
+  num_steps: 5
