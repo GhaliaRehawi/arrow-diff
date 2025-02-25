@@ -4,7 +4,7 @@ Official implementation of the ARROW-Diff graph generation method proposed in th
 ARROW-Diff is a novel approach for large-scale graph generation based on random walk diffusion.
 It generates graphs by integrating two components into an iterative procedure: (1) An order agnostic autoregressive diffusion model on the level of random walks that learns the generative process of random walks of an input graph, and (2) a GNN component that learns to filter out unlikely edges from the generated graph. Due to the random walk-based diffusion, ARROW-Diff efficiently scales to large graphs, significantly reducing the generation time.
 
-<img src="./figures/arrow-diff.png" alt="Overview of ARROW-Diff." style="background-color: white; background-size: 105% 105%; background-position: center; background-repeat: no-repeat;">
+<img src="./figures/arrow-diff.png" alt="Overview of ARROW-Diff." style="background-color: white; background-size: 100% 100%; background-position: center; background-repeat: no-repeat;">
 Overview of ARROW-Diff.
 
 ## Getting Started
