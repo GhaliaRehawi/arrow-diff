@@ -25,4 +25,4 @@ and run the training script using the command `python main_arrow_diff_training.p
 ### ARROW-Diff Graph Generation
 
 Please set the `graph_generation` parameters in `configs/config.yaml`
-and the graph generation scipt using the command `python main_arrow_diff_graph_generation.py`.
+and the graph generation script using the command `python main_arrow_diff_graph_generation.py`.
